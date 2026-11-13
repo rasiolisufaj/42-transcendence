@@ -1,0 +1,192 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 330" width="880" height="330" role="img" aria-labelledby="title desc">
+  <title id="title">MesPapiers</title>
+  <desc id="desc">A document drops into the private vault and AI extraction reads its type and expiry date. Its status moves from Valid to Expiring soon to Expired, and the bell notifies the owner each time. On the community side, a question about renewing a titre de séjour gets an answer and votes. A dashed line between the two halves says nothing crosses.</desc>
+  <style>
+    text { font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+    .lbl { font-size: 11px; fill: #71717a; }
+    .val { font-size: 13px; font-weight: 500; fill: #fafafa; }
+    .msg { font-size: 12px; fill: #e4e4e7; }
+    .cap { font-size: 10.5px; font-weight: 600; letter-spacing: 1.4px; fill: #71717a; }
+    .badge { font-size: 11px; font-weight: 600; text-anchor: middle; }
+    .toast { font-size: 11.5px; font-weight: 500; }
+
+    /* One 10 s loop; every animated element is .a plus its own keyframes. */
+    .a { animation-duration: 10s; animation-iteration-count: infinite; animation-timing-function: ease-out; }
+    .scene { animation-name: scene; }
+    .doc { animation-name: doc; }
+    .scan { animation-name: scan; animation-timing-function: linear; }
+    .ai { animation-name: ai; }
+    .card { animation-name: card; }
+    .f1 { animation-name: f1; }
+    .f2 { animation-name: f2; }
+    .f3 { animation-name: f3; }
+    .s1 { animation-name: s1; }
+    .s2 { animation-name: s2; }
+    .s3 { animation-name: s3; }
+    .bell { animation-name: ring; animation-timing-function: linear; transform-box: fill-box; transform-origin: 50% 0; }
+    .dot { animation-name: dot; transform-box: fill-box; transform-origin: center; }
+    .q { animation-name: q; }
+    .ans { animation-name: ans; }
+    .v1 { animation-name: v1; }
+    .v2 { animation-name: v2; }
+
+    /* Without animation (reduced motion), this is the frame that shows: Expiring soon. */
+    .scan, .s1, .s3, .v1 { opacity: 0; }
+
+    @keyframes scene { 0%, 93% { opacity: 1; } 98%, 100% { opacity: 0; } }
+    @keyframes doc { 0% { opacity: 0; transform: translateY(-24px); } 6%, 100% { opacity: 1; transform: none; } }
+    @keyframes scan { 0%, 8% { opacity: 0; transform: none; } 9% { opacity: 1; transform: none; } 21% { opacity: 1; transform: translateY(128px); } 23%, 100% { opacity: 0; transform: translateY(128px); } }
+    @keyframes ai { 0%, 8% { opacity: 0; } 11%, 100% { opacity: 1; } }
+    @keyframes card { 0%, 20% { opacity: 0; transform: translateX(-8px); } 24%, 100% { opacity: 1; transform: none; } }
+    @keyframes f1 { 0%, 24% { opacity: 0; } 27%, 100% { opacity: 1; } }
+    @keyframes f2 { 0%, 28% { opacity: 0; } 31%, 100% { opacity: 1; } }
+    @keyframes f3 { 0%, 32% { opacity: 0; } 35%, 100% { opacity: 1; } }
+    @keyframes s1 { 0%, 34% { opacity: 0; } 36%, 47% { opacity: 1; } 49%, 100% { opacity: 0; } }
+    @keyframes s2 { 0%, 47% { opacity: 0; } 49%, 63% { opacity: 1; } 65%, 100% { opacity: 0; } }
+    @keyframes s3 { 0%, 63% { opacity: 0; } 65%, 100% { opacity: 1; } }
+    @keyframes ring {
+      0%, 48%, 53%, 64%, 69%, 100% { transform: none; }
+      49%, 65% { transform: rotate(16deg); }
+      50%, 66% { transform: rotate(-13deg); }
+      51%, 67% { transform: rotate(8deg); }
+      52%, 68% { transform: rotate(-4deg); }
+    }
+    @keyframes dot { 0%, 48% { opacity: 0; transform: scale(0); } 51%, 100% { opacity: 1; transform: none; } }
+    @keyframes q { 0%, 36% { opacity: 0; transform: translateY(8px); } 39%, 100% { opacity: 1; transform: none; } }
+    @keyframes ans { 0%, 52% { opacity: 0; transform: translateY(8px); } 55%, 100% { opacity: 1; transform: none; } }
+    @keyframes v1 { 0%, 55% { opacity: 0; } 57%, 72% { opacity: 1; } 73%, 100% { opacity: 0; } }
+    @keyframes v2 { 0%, 72% { opacity: 0; } 73%, 100% { opacity: 1; } }
+
+    @media (prefers-reduced-motion: reduce) { .a { animation: none; } }
+  </style>
+  <defs>
+    <radialGradient id="glow" cx="0.08" cy="0" r="0.7">
+      <stop offset="0" stop-color="#2563eb" stop-opacity=".28"/>
+      <stop offset="1" stop-color="#2563eb" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="scanGlow" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#60a5fa" stop-opacity="0"/>
+      <stop offset="1" stop-color="#60a5fa" stop-opacity=".45"/>
+    </linearGradient>
+    <clipPath id="docClip"><rect x="56" y="150" width="120" height="128" rx="6"/></clipPath>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#52525b"/>
+    </marker>
+  </defs>
+
+  <!-- Card -->
+  <rect x=".5" y=".5" width="879" height="329" rx="16" fill="#18181b" stroke="#27272a"/>
+  <rect x=".5" y=".5" width="879" height="329" rx="16" fill="url(#glow)"/>
+
+  <!-- Header -->
+  <rect x="32" y="30" width="36" height="36" rx="9" fill="#2563eb"/>
+  <path d="M43,38 H52 L59,45 V57 a2,2 0 0 1 -2,2 H43 a2,2 0 0 1 -2,-2 V40 a2,2 0 0 1 2,-2 z" fill="#fff"/>
+  <path d="M52,38 L59,45 H52 z" fill="#93c5fd"/>
+  <rect x="45" y="49" width="10" height="2" rx="1" fill="#93c5fd"/>
+  <rect x="45" y="53" width="7" height="2" rx="1" fill="#93c5fd"/>
+  <text x="80" y="58" font-size="28" font-weight="700" fill="#fafafa">Mes<tspan fill="#60a5fa">Papiers</tspan></text>
+  <text x="32" y="94" font-size="14" fill="#a1a1aa">French paperwork, sorted: a private document vault, and a community that has been through it.</text>
+
+  <!-- Bell (outline static, ringing and dot animated) -->
+  <g transform="translate(842,46)">
+    <g class="a bell">
+      <path d="M-7,4 V-1 a7,7 0 0 1 14,0 V4 l2,3 H-9 z" fill="none" stroke="#a1a1aa" stroke-width="1.8" stroke-linejoin="round"/>
+      <path d="M-2.5,10 a2.5,2.5 0 0 0 5,0" fill="none" stroke="#a1a1aa" stroke-width="1.8" stroke-linecap="round"/>
+      <circle class="a dot" cx="7" cy="-7" r="4.5" fill="#ef4444" stroke="#18181b" stroke-width="2"/>
+    </g>
+  </g>
+
+  <!-- Panels -->
+  <rect x="32" y="112" width="470" height="198" rx="12" fill="#09090b" stroke="#27272a"/>
+  <rect x="49" y="126" width="9" height="7" rx="1.5" fill="#71717a"/>
+  <path d="M51,126 V124 a2.5,2.5 0 0 1 5,0 V126" fill="none" stroke="#71717a" stroke-width="1.5"/>
+  <text x="64" y="133" class="cap">PRIVATE VAULT</text>
+
+  <rect x="578" y="112" width="270" height="198" rx="12" fill="#09090b" stroke="#27272a"/>
+  <path d="M596,124 h11 a2,2 0 0 1 2,2 v5 a2,2 0 0 1 -2,2 h-6 l-3,3 v-3 h-2 a2,2 0 0 1 -2,-2 v-5 a2,2 0 0 1 2,-2 z" fill="#71717a"/>
+  <text x="616" y="133" class="cap">COMMUNITY</text>
+  <text x="832" y="133" font-size="11" fill="#60a5fa" text-anchor="end">#titre-de-sejour</text>
+
+  <!-- The boundary -->
+  <path d="M540,122 V190 M540,232 V300" stroke="#3f3f46" stroke-width="1.5" stroke-dasharray="4 4"/>
+  <rect x="506" y="192" width="68" height="38" rx="9" fill="#18181b" stroke="#3f3f46"/>
+  <text x="540" y="207" font-size="10.5" fill="#a1a1aa" text-anchor="middle">nothing</text>
+  <text x="540" y="221" font-size="10.5" fill="#a1a1aa" text-anchor="middle">crosses</text>
+
+  <g class="a scene">
+    <!-- 1. The document drops in -->
+    <g class="a doc">
+      <rect x="56" y="150" width="120" height="128" rx="6" fill="#f4f4f5"/>
+      <rect x="66" y="160" width="8" height="5" fill="#2563eb"/>
+      <rect x="74" y="160" width="8" height="5" fill="#fff" stroke="#d4d4d8" stroke-width=".5"/>
+      <rect x="82" y="160" width="8" height="5" fill="#ef4444"/>
+      <text x="66" y="180" font-size="8.5" font-weight="700" letter-spacing=".6" fill="#3f3f46">TITRE DE SÉJOUR</text>
+      <rect x="66" y="188" width="30" height="36" rx="3" fill="#d4d4d8"/>
+      <circle cx="81" cy="201" r="6" fill="#a1a1aa"/>
+      <path d="M70,224 a11,9 0 0 1 22,0 z" fill="#a1a1aa"/>
+      <rect x="104" y="192" width="60" height="5" rx="2.5" fill="#d4d4d8"/>
+      <rect x="104" y="204" width="46" height="5" rx="2.5" fill="#d4d4d8"/>
+      <rect x="104" y="216" width="54" height="5" rx="2.5" fill="#d4d4d8"/>
+      <rect x="66" y="238" width="98" height="4" rx="2" fill="#a1a1aa"/>
+      <rect x="66" y="248" width="98" height="4" rx="2" fill="#a1a1aa"/>
+      <rect x="66" y="262" width="62" height="5" rx="2.5" fill="#d4d4d8"/>
+    </g>
+
+    <!-- 2. AI extraction scans it -->
+    <g clip-path="url(#docClip)">
+      <g class="a scan">
+        <rect x="56" y="128" width="120" height="22" fill="url(#scanGlow)"/>
+        <rect x="56" y="149" width="120" height="2" fill="#60a5fa"/>
+      </g>
+    </g>
+    <text class="a ai" x="116" y="298" font-size="11" fill="#60a5fa" text-anchor="middle">AI extraction</text>
+
+    <!-- 3. Typed fields come out -->
+    <g class="a card">
+      <path d="M184,214 H216" stroke="#52525b" stroke-width="1.5" marker-end="url(#arr)"/>
+      <rect x="226" y="150" width="260" height="128" rx="8" fill="#18181b" stroke="#27272a"/>
+    </g>
+    <g class="a f1"><text x="242" y="178" class="lbl">Type</text><text x="330" y="178" class="val">Titre de séjour</text></g>
+    <g class="a f2"><text x="242" y="206" class="lbl">Expires</text><text x="330" y="206" class="val">12 March 2027</text></g>
+    <g class="a f3"><text x="242" y="234" class="lbl">Status</text><text x="242" y="262" class="lbl">Days left</text></g>
+
+    <!-- 4. Status is derived as time passes; the bell rings at 90 days and at expiry -->
+    <g class="a s1">
+      <rect x="328" y="220" width="52" height="20" rx="10" fill="#10b981" fill-opacity=".15" stroke="#10b981" stroke-opacity=".5"/>
+      <text x="354" y="234" class="badge" style="fill:#34d399">Valid</text>
+      <text x="330" y="262" class="val" style="fill:#34d399">412</text>
+    </g>
+    <g class="a s2">
+      <rect x="328" y="220" width="104" height="20" rx="10" fill="#f59e0b" fill-opacity=".15" stroke="#f59e0b" stroke-opacity=".5"/>
+      <text x="380" y="234" class="badge" style="fill:#fbbf24">Expiring soon</text>
+      <text x="330" y="262" class="val" style="fill:#fbbf24">87</text>
+      <rect x="600" y="33" width="220" height="26" rx="13" fill="#f59e0b" fill-opacity=".12" stroke="#f59e0b" stroke-opacity=".45"/>
+      <text x="806" y="50" class="toast" text-anchor="end" style="fill:#fcd34d">Titre de séjour expires in 87 days</text>
+    </g>
+    <g class="a s3">
+      <rect x="328" y="220" width="68" height="20" rx="10" fill="#ef4444" fill-opacity=".15" stroke="#ef4444" stroke-opacity=".5"/>
+      <text x="362" y="234" class="badge" style="fill:#f87171">Expired</text>
+      <text x="330" y="262" class="val" style="fill:#f87171">0</text>
+      <rect x="638" y="33" width="182" height="26" rx="13" fill="#ef4444" fill-opacity=".12" stroke="#ef4444" stroke-opacity=".45"/>
+      <text x="806" y="50" class="toast" text-anchor="end" style="fill:#fca5a5">Titre de séjour has expired</text>
+    </g>
+
+    <!-- 5. Meanwhile, the community answers -->
+    <g class="a q">
+      <rect x="594" y="148" width="238" height="44" rx="10" fill="#27272a"/>
+      <circle cx="610" cy="170" r="9" fill="#3f3f46"/>
+      <text x="610" y="173.5" font-size="9.5" font-weight="600" fill="#d4d4d8" text-anchor="middle">M</text>
+      <text x="626" y="166" class="msg">Renewing my titre de séjour:</text>
+      <text x="626" y="182" class="msg">which papers do I need?</text>
+    </g>
+    <g class="a ans">
+      <rect x="618" y="204" width="214" height="44" rx="10" fill="#2563eb" fill-opacity=".18" stroke="#3b82f6" stroke-opacity=".5"/>
+      <text x="632" y="222" class="msg">Proof of address, 3 photos,</text>
+      <text x="632" y="238" class="msg">and book the RDV early.</text>
+      <rect x="764" y="258" width="68" height="24" rx="12" fill="#18181b" stroke="#3f3f46"/>
+      <path d="M778,274 l5,-8 l5,8 z" fill="#34d399"/>
+    </g>
+    <text class="a v1" x="796" y="275" font-size="12" font-weight="600" fill="#e4e4e7">4</text>
+    <text class="a v2" x="796" y="275" font-size="12" font-weight="600" fill="#e4e4e7">12</text>
+  </g>
+</svg>

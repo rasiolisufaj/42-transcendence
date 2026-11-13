@@ -1,0 +1,119 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 400" width="880" height="400" role="img" aria-labelledby="title desc">
+  <title id="title">MesPapiers architecture</title>
+  <desc id="desc">The browser talks HTTPS and WSS to nginx only. nginx sends / to the web process (Next.js) and /ws to the realtime process (ws). web and worker post events to realtime on /publish, and realtime pushes them to the browser. web, realtime and worker use PostgreSQL; web also calls the Claude API and sends mail through Mailpit.</desc>
+  <style>
+    text { font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+    .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    .t { font-size: 14px; font-weight: 600; fill: #fafafa; }
+    .tx { font-size: 13px; font-weight: 600; fill: #e4e4e7; }
+    .s { font-size: 11.5px; fill: #a1a1aa; }
+    .sx { font-size: 10.5px; fill: #a1a1aa; }
+    .e { fill: none; stroke: #52525b; stroke-width: 1.5; }
+    .route { font-size: 11px; fill: #60a5fa; }
+    .wire { font-size: 10px; fill: #71717a; }
+    .leg { font-size: 11.5px; fill: #a1a1aa; }
+    @media (prefers-reduced-motion: reduce) { .packet { display: none; } }
+  </style>
+  <defs>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#52525b"/>
+    </marker>
+    <radialGradient id="glow" cx="0.08" cy="0" r="0.7">
+      <stop offset="0" stop-color="#2563eb" stop-opacity=".22"/>
+      <stop offset="1" stop-color="#2563eb" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Card -->
+  <rect x=".5" y=".5" width="879" height="399" rx="16" fill="#18181b" stroke="#27272a"/>
+  <rect x=".5" y=".5" width="879" height="399" rx="16" fill="url(#glow)"/>
+  <text x="32" y="40" font-size="18" font-weight="700" fill="#fafafa">Architecture</text>
+  <text x="32" y="62" font-size="12.5" fill="#a1a1aa">One Docker image, three Node processes, NGINX in front: the browser only ever talks HTTPS.</text>
+
+  <!-- Edges (drawn under the nodes) -->
+  <path class="e" d="M152,198 H210" marker-end="url(#arr)"/>
+  <path class="e" d="M212,220 H154" marker-end="url(#arr)"/>
+  <path class="e" d="M332,194 L410,142" marker-end="url(#arr)"/>
+  <path class="e" d="M332,222 L410,292" marker-end="url(#arr)"/>
+  <path class="e" d="M497,176 V268" marker-end="url(#arr)"/>
+  <path class="e" d="M582,110 L674,99" marker-end="url(#arr)"/>
+  <path class="e" d="M582,134 L674,148" marker-end="url(#arr)"/>
+  <path class="e" d="M582,162 L674,206" marker-end="url(#arr)"/>
+  <path class="e" d="M582,284 L674,232" marker-end="url(#arr)"/>
+  <path class="e" d="M761,270 V244" marker-end="url(#arr)"/>
+  <path class="e" d="M676,302 H584" marker-end="url(#arr)"/>
+
+  <text x="182" y="190" class="mono wire" text-anchor="middle">HTTPS</text>
+  <text x="182" y="236" class="mono wire" text-anchor="middle">WSS</text>
+  <text x="360" y="166" class="mono route" text-anchor="end">/</text>
+  <text x="360" y="264" class="mono route" text-anchor="end">/ws</text>
+  <text x="505" y="226" class="mono route">/publish</text>
+  <text x="629" y="294" class="mono route" text-anchor="middle">/publish</text>
+
+  <!-- Packets: drawn under the nodes, so they vanish while a process handles them -->
+  <g class="packet">
+    <circle r="9" fill="#3b82f6" opacity=".25"/><circle r="4" fill="#60a5fa"/>
+    <animateMotion dur="4s" repeatCount="indefinite" path="M92,198 H212 L332,194 L412,142 L582,162 L760,214"/>
+  </g>
+  <g class="packet" opacity="0">
+    <circle r="9" fill="#10b981" opacity=".25"/><circle r="4" fill="#34d399"/>
+    <set attributeName="opacity" to="1" begin="1.3s"/>
+    <animateMotion dur="4s" begin="1.3s" repeatCount="indefinite" path="M760,302 H582 L412,292 L332,222 L212,220 H92"/>
+  </g>
+  <g class="packet" opacity="0">
+    <circle r="9" fill="#10b981" opacity=".25"/><circle r="4" fill="#34d399"/>
+    <set attributeName="opacity" to="1" begin="2.6s"/>
+    <animateMotion dur="4s" begin="2.6s" repeatCount="indefinite" path="M497,136 V270 L412,292 L332,222 L212,220 H92"/>
+  </g>
+  <g class="packet" opacity="0">
+    <circle r="9" fill="#8b5cf6" opacity=".25"/><circle r="4" fill="#c4b5fd"/>
+    <set attributeName="opacity" to="1" begin="0.6s"/>
+    <animateMotion dur="2.4s" begin="0.6s" repeatCount="indefinite" calcMode="linear" keyPoints="0;1;0" keyTimes="0;0.5;1" path="M520,112 L582,110 L720,94"/>
+  </g>
+
+  <!-- Nodes -->
+  <rect x="32" y="176" width="120" height="64" rx="10" fill="#27272a" stroke="#3f3f46"/>
+  <text x="46" y="202" class="t">Browser</text>
+  <text x="46" y="222" class="s">fr · en · es</text>
+
+  <rect x="212" y="176" width="120" height="64" rx="10" fill="#27272a" stroke="#3f3f46"/>
+  <text x="226" y="202" class="t">nginx</text>
+  <text x="226" y="222" class="s">TLS · :8443</text>
+
+  <rect x="412" y="96" width="170" height="80" rx="10" fill="#27272a" stroke="#3b82f6"/>
+  <text x="426" y="120" class="t">web</text>
+  <text x="426" y="140" class="s">Next.js 16 · React 19</text>
+  <text x="426" y="158" class="s">pages · actions · SSE</text>
+
+  <rect x="412" y="270" width="170" height="64" rx="10" fill="#27272a" stroke="#3b82f6"/>
+  <text x="426" y="296" class="t">realtime</text>
+  <text x="426" y="316" class="s">ws · presence · events</text>
+
+  <rect x="676" y="78" width="170" height="40" rx="8" fill="#18181b" stroke="#52525b" stroke-dasharray="4 3"/>
+  <text x="690" y="95" class="tx">Claude API</text>
+  <text x="690" y="110" class="sx">extraction · assistant</text>
+
+  <rect x="676" y="128" width="170" height="40" rx="8" fill="#18181b" stroke="#52525b" stroke-dasharray="4 3"/>
+  <text x="690" y="145" class="tx">Mailpit</text>
+  <text x="690" y="160" class="sx">GDPR mails (SMTP)</text>
+
+  <rect x="676" y="186" width="170" height="56" rx="10" fill="#27272a" stroke="#3f3f46"/>
+  <text x="690" y="209" class="t">PostgreSQL 17</text>
+  <text x="690" y="228" class="s">Prisma · constraints</text>
+
+  <rect x="676" y="270" width="170" height="64" rx="10" fill="#27272a" stroke="#3b82f6"/>
+  <text x="690" y="296" class="t">worker</text>
+  <text x="690" y="316" class="s">deadline scan · 1 min</text>
+
+  <!-- Legend -->
+  <circle cx="40" cy="368" r="4.5" fill="#60a5fa"/>
+  <text x="52" y="372" class="leg">page request</text>
+  <circle cx="170" cy="368" r="4.5" fill="#34d399"/>
+  <text x="182" y="372" class="leg">realtime event</text>
+  <circle cx="300" cy="368" r="4.5" fill="#c4b5fd"/>
+  <text x="312" y="372" class="leg">AI call</text>
+  <rect x="380" y="362" width="12" height="12" rx="3" fill="#27272a" stroke="#3b82f6"/>
+  <text x="398" y="372" class="leg">Node process, same image</text>
+  <rect x="572" y="362" width="12" height="12" rx="3" fill="#18181b" stroke="#52525b" stroke-dasharray="3 2"/>
+  <text x="590" y="372" class="leg">external service</text>
+</svg>

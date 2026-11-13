@@ -1,5 +1,9 @@
 *This project has been created as part of the 42 curriculum by adregis, raisufaj, amkhelif, alehamad*
 
+<p align="center">
+  <img src=".github/assets/hero.svg" width="100%" alt="MesPapiers in one loop: a titre de séjour drops into the private vault, AI extraction reads its type and expiry date, and its status moves from Valid to Expiring soon to Expired while the bell notifies the owner. On the community side, a question about renewing it gets an answer and votes. A dashed line between the two halves says nothing crosses.">
+</p>
+
 # MesPapiers
 
 ## Description
@@ -173,6 +177,10 @@ npm test               # requires the db service to be running for DB tests
 | i18n | `next-intl` v4 | FR / EN / ES, locale-prefixed routing (`/fr`, `/en`, `/es`). |
 | Auth | Hand-rolled (Argon2id, SHA-256 sessions, PKCE OAuth, TOTP) | Following The Copenhagen Book and the Auth Book — no auth library dependency. |
 | Infrastructure | Docker Compose + NGINX | One image, three processes (`web`, `realtime`, `worker`); NGINX terminates TLS so every browser-facing request is HTTPS. |
+
+<p align="center">
+  <img src=".github/assets/architecture.svg" width="100%" alt="Architecture: the browser talks HTTPS and WSS to nginx only. nginx sends / to the web process (Next.js) and /ws to the realtime process. web and the worker post events to realtime on /publish, and realtime pushes them to the browser. web, realtime and worker use PostgreSQL; web also calls the Claude API and sends mail through Mailpit.">
+</p>
 
 ## Database Schema
 
